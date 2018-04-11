@@ -1,64 +1,28 @@
 <% include ../partials/header %>
 
 <div class="container">
+	<div class="text-center">
+		<i class="fas fa-graduation-cap fa-3x"></i><br>
+		<span>CAMPUS.IO</span><br><br>
+	</div>
 	<form class="col-md-6 offset-md-3"
-	 action="/quiz/addQuestions/<%= quizId %>"
-	 method="POST">
-		<div class="text-center">
-			<i class="fas fa-graduation-cap fa-3x"></i><br>
-			<span>CAMPUS.IO</span><br><br>
-		</div>
-		<legend>Question <%= questionNo%> details</legend>
-		<div id="questionContainer">
-			<div class="form-group">
-			    <label for="question">Question</label>
-			    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-			    type="text" name="question"
-			    ></textarea>
-			  </div></br>
-			  <div class="form-group">
-			    <label for="option1">Option1</label>
-			    <textarea class="form-control" 
-			    id="exampleFormControlTextarea1" rows="1"
-			    type="text" name="option1"></textarea>
-			  </div></br>
-			  <div class="form-group">
-			    <label for="option2">Option2</label>
-			    <textarea class="form-control" 
-			    id="exampleFormControlTextarea1" rows="1"
-			    type="text" name="option2"></textarea>
-			  </div></br>
-		</div>
-		<a href="#" id="addOptions">addOptions</a>
-		<div class="form-group">
-			    <label for="answer">Answer</label>
-			    <textarea class="form-control" 
-			    id="exampleFormControlTextarea1" rows="1"
-			    type="text" name="answer"></textarea>
-			  </div></br>
-		<div class="form-group">
-			<button class="btn btn-primary" type="submit">
-			Next Question</button>
-		</div>
-	</form>
+	action="/quiz/addQuestions/<%= quizId %>"
+	method="POST"> 
+	<legend> Add question <%= questionNo %> details</legend>
+	<div class="form-group">
+		<label for="question">Question</label>
+		<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+		type="text" name="question" required="true"></textarea>
+	</div></br>
+	<div id="optionContainer"> </div>
+	<button id="addOptions" type="button">Add Options</button>
+	</br>
+	</br>
+	<button class="btn btn-primary" type="submit">
+	Next Question</button>
+</div>
+</form>
 </div>
 
 <script type="text/javascript" src="/scripts/addQuestions.js"></script>
 <% include ../partials/footer %>
-
-
-
-
-
-			  <!-- <div class="form-group">
-			    <label for="option3">Option3</label>
-			    <textarea class="form-control" 
-			    id="exampleFormControlTextarea1" rows="1"
-			    type="text" name="option3"></textarea>
-			  </div></br>
-			  <div class="form-group">
-			    <label for="option4">Option4</label>
-			    <textarea class="form-control" 
-			    id="exampleFormControlTextarea1" rows="1"
-			    type="text" name="option4"></textarea>
-			  </div></br> -->

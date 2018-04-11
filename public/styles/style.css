@@ -6,3 +6,8 @@ body {
 a:hover {
 	text-decoration: none;
 }
+
+input[type=radio] {
+    width: 30px;
+    height: 30px;
+}
