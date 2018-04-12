@@ -10,8 +10,7 @@ router.get('/create', middleware.isLoggedIn, function(req, res) {
 });
 
 // Adding questions to quiz
-// router.get('/addQuestions/:quizId', middleware.isLoggedIn, function(req, res) {
-router.get('/addQuestions/:quizId', function(req, res) {
+router.get('/addQuestions/:quizId', middleware.isLoggedIn, function(req, res) {
 	Quiz.findById(req.params.quizId, function(error, foundQuiz) {
 		if(error)
 			req.flash('error', 'Something went wrong. Please try again.');
@@ -29,24 +28,22 @@ router.get('/addQuestions/:quizId', function(req, res) {
 });
 
 // Adding the question to the quizz
-// router.post('/addQuestions/:quizId', middleware.isLoggedIn, function(req, res) {
-	router.post('/addQuestions/:quizId', function(req, res) {
-		var newQuestion = {
-			question : req.body.question,
-			answer : req.body[req.body.answer],
-			options : []
-		};
-		for(var i=1;i<Object.keys(req.body).length - 1;i++){
-			newQuestion.options.push({ option : req.body["option" + i]});
-		}
-		console.log(newQuestion);
-		Quiz.update(
-			{ _id: req.params.quizId },
-			{ $push: { questions: newQuestion } },
-			function(err, num) {});
-		
-		res.redirect('/quiz/addQuestions/' + req.params.quizId);
-	});
+router.post('/addQuestions/:quizId', middleware.isLoggedIn, function(req, res) {
+	var newQuestion = {
+		question : req.body.question,
+		answer : req.body[req.body.answer],
+		options : []
+	};
+	for(var i=1;i<Object.keys(req.body).length - 1;i++){
+		newQuestion.options.push({ option : req.body["option" + i]});
+	}
+	Quiz.update(
+		{ _id: req.params.quizId },
+		{ $push: { questions: newQuestion } },
+		function(err, num) {});
+
+	res.redirect('/quiz/addQuestions/' + req.params.quizId);
+});
 
 
 // Adding the title to the quizz
@@ -63,7 +60,6 @@ router.post('/create', middleware.isLoggedIn, function(req, res) {
 			req.flash('error', 'Something went wrong. Please try again.');
 		} else {
 			req.flash('success', 'Successfully created.');
-			//redirect to add questions
 			res.redirect('/quiz/addQuestions/' + newlyCreated._id);
 		}
 	})

@@ -1,11 +1,13 @@
 var optionContainer = document.getElementById("optionContainer");
-var addOptions = document.getElementById("addOptions");
+var addOption = document.getElementById("addOption");
+var removeOption = document.getElementById("removeOption");
 
 var optionCounter = 1;
 
 function addTextField(questionNum) {
 	var divUpperElement = document.createElement("div");
 	var divInnerElement = document.createElement("div");
+	var option = document.createElement("div");
 	var lableElement = document.createElement("Label");
 	var textareaElement = document.createElement("textarea");
 	var radioButton = document.createElement("input");
@@ -24,7 +26,6 @@ function addTextField(questionNum) {
 
 	lableElement.setAttribute("for", "option" + questionNum);
 	lableElement.appendChild(document.createTextNode("Option" + questionNum));
-	optionContainer.appendChild(lableElement);
 	
 	textareaElement.type = "text";
 	textareaElement.required = "true";
@@ -34,14 +35,30 @@ function addTextField(questionNum) {
 	textareaElement.rows="1";
 	divUpperElement.appendChild(textareaElement);
 
-	optionContainer.appendChild(divUpperElement);
-	optionContainer.appendChild(document.createElement("br"));
+	option.id = "option" + questionNum;
+	option.appendChild(lableElement);
+	option.appendChild(divUpperElement);
+	option.appendChild(document.createElement("br"));
+	optionContainer.appendChild(option);
 }
 addTextField(optionCounter++);
 addTextField(optionCounter++);
+removeOption.style.display = "none";
 
-addOptions.addEventListener('click', function() {
+addOption.addEventListener('click', function() {
 	addTextField(optionCounter++);
+	removeOption.style.display = "block";
+
 	if(optionCounter > 5)
-		addOptions.style.display = "none";
+		addOption.style.display = "none";
+});
+
+removeOption.addEventListener('click', function() {
+	if(optionCounter > 3){
+		document.getElementById("option" + (--optionCounter)).remove();
+		addOption.style.display = "block";
+	}
+	if(optionCounter < 4){
+		removeOption.style.display = "none";
+	}
 });
