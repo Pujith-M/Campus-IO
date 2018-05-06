@@ -30,4 +30,31 @@ router.get('/:id', middleware.isLoggedIn, function(req, res) {
 	});
 });
 
+// Handles the post method of Postes
+router.post('/addNewQuiz', middleware.isLoggedIn, function(req, res) {
+	User.findById(req.user._id, function(error, foundUser) {
+		if(error)
+			req.flash('error', 'Something went wrong. Please try again.');
+		else{
+			var newQuiz = new Quiz({
+				title : req.body.title,
+				author : {
+					id : req.user._id,
+					name : foundUser.firstname + " " + foundUser.lastname,
+					avatar : foundUser.avatar
+				}
+			});
+			Quiz.create(newQuiz,function(err, newlyCreated){
+				if(err) {
+					req.flash('error', 'Something went wrong. Please try again.');
+				} else {
+					req.flash('success', 'Successfully created.');
+					res.redirect('/quiz/addQuestions/' + newlyCreated._id);
+				}
+			})
+		}
+	});
+});
+
+
 module.exports 	=	router;

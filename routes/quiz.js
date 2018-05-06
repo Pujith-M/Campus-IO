@@ -27,6 +27,31 @@ router.get('/addQuestions/:quizId', middleware.isLoggedIn, function(req, res) {
 		}
 	});
 });
+// Adding the title to the quizz
+router.post('/addNewQuiz', middleware.isLoggedIn, function(req, res) {
+	User.findById(req.user._id, function(error, foundUser) {
+		if(error)
+			req.flash('error', 'Something went wrong. Please try again.');
+		else{
+			var newQuiz = new Quiz({
+				title : req.body.title,
+				author : {
+					id : req.user._id,
+					name : foundUser.firstname + " " + foundUser.lastname,
+					avatar : foundUser.avatar
+				}
+			});
+			Quiz.create(newQuiz,function(err, newlyCreated){
+				if(err) {
+					req.flash('error', 'Something went wrong. Please try again.');
+				} else {
+					req.flash('success', 'Successfully created.');
+					res.redirect('/quiz/addQuestions/' + newlyCreated._id);
+				}
+			})
+		}
+	});
+});
 
 // Adding the question to the quizz
 router.post('/addQuestions/:quizId', middleware.isLoggedIn, function(req, res) {
@@ -56,39 +81,12 @@ router.get('/priview/:quizId', middleware.isLoggedIn, function(req, res) {
 		if(error)
 			req.flash('error', 'Something went wrong. Please try again.');
 		else{
-			res.render('quiz/takeQuiz', {currentQuiz: foundQuiz});
+			res.render('quiz/takeQuiz', {currentQuiz: foundQuiz, priview: true});
 		}
 	});
 	
 });
 
-// Adding the title to the quizz
-router.post('/addNewQuiz', middleware.isLoggedIn, function(req, res) {
-	User.findById(req.user._id, function(error, foundUser) {
-		if(error)
-			req.flash('error', 'Something went wrong. Please try again.');
-		else{
-			var newQuiz = new Quiz({
-				title : req.body.title,
-				author : {
-					id : req.user._id,
-					name : foundUser.firstname + " " + foundUser.lastname,
-					avatar : foundUser.avatar
-				}
-			});
-			Quiz.create(newQuiz,function(err, newlyCreated){
-				if(err) {
-					req.flash('error', 'Something went wrong. Please try again.');
-				} else {
-					req.flash('success', 'Successfully created.');
-					res.redirect('/quiz/addQuestions/' + newlyCreated._id);
-				}
-			})
-		}
-	});
-
-	
-});
 
 // Taking quiz 
 router.get('/takeQuiz/:quizId', middleware.isLoggedIn, function(req, res) {
@@ -96,7 +94,7 @@ router.get('/takeQuiz/:quizId', middleware.isLoggedIn, function(req, res) {
 		if(error)
 			req.flash('error', 'Something went wrong. Please try again.');
 		else{
-			res.render('quiz/takeQuiz', {currentQuiz: foundQuiz});
+			res.render('quiz/takeQuiz', {currentQuiz: foundQuiz, priview: false});
 		}
 	});
 	
