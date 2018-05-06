@@ -1,13 +1,21 @@
 // requiring packages
 var express		=	require('express'),
-	router		=	express.Router(),
-	User		=	require('../models/user'),
-	middleware 	=	require('../middleware');
+router		=	express.Router(),
+User		=	require('../models/user'),
+Quiz		=	require('../models/quiz'),
+middleware 	=	require('../middleware');
 
 
 // render the home page
 router.get('/home', middleware.isLoggedIn, function(req, res) {
-	res.render('user/home');
+	Quiz.find({},"title author", function(err, allQuiz) {
+		if(err) {
+			req.flash('error', 'Something went wrong. Please try again.');
+		} else {
+			res.render('user/home', {quizzes: allQuiz});
+		}
+	});	
+
 });
 
 // render the profile page

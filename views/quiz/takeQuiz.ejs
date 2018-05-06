@@ -1,0 +1,32 @@
+	<% include ../partials/header %>
+	<!-- Custom stylesheet -->
+	<link rel="stylesheet" type="text/css" href="/styles/style.css">
+	<div class="container ">
+		<form action="/quiz/takeQuiz/<%=currentQuiz.id%>" method="POST">
+			<% currentQuiz.questions.forEach(function(question) { %>
+			<div class="media question input-group rounded" >
+				<div class="input-group">
+					<p>
+						<%= question.question%>
+					</p>
+					<br/>
+				</div>
+				<div class="">
+					<% question.options.forEach(function(option) { %>
+					<div style="margin-top: 3px">
+						<input type="radio" id="q156" class="options" style="margin-left: 10px" name="<%= question.id%>" value="<%= option.option%>" > 
+						<label style="margin-left: 10px">
+							<%= option.option%> <br/>
+						</label>
+					</div>
+					<% }); %>
+				</div>
+			</div>
+			<% }); %>
+			<div class="form-group" style="margin-top: 2%; text-align: right;">
+				<button class="btn btn-primary" type="submit">Submit</button>
+			</div>
+		</form>
+	</div>
+	
+	<% include ../partials/footer %>

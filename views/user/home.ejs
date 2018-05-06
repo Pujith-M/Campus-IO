@@ -4,10 +4,29 @@
 	This is the home page
 	<div class="form-group">
 		<button class="btn btn-primary" type="submit">
-		<a class="float-right" style="color: white" href="/quiz/create">Create Quiz</a>
+			<a class="float-right" style="color: white" href="/quiz/addNewQuiz">Create Quiz</a>
 		</button>
 	</div>
+	<% quizzes.forEach(function(quiz) { %>
+	<div class="media jumbotron quiz-post">
+		<div >
+			<img class="rounded mx-auto d-block" src = "<%= quiz.author.avatar %>" alt="Generic placeholder image"> 
+		</div>
+		<div class="media-body">
+			<h6 class="mt-0"> <%= quiz.title%></h6>
+			<h5 class="mt-0"><%= quiz.author.name%></h5>
+		</div>
+		<div style="margin-top: 10%; text-align: center;">
+			<a class="float-right" style="color: white" href="/quiz/takeQuiz/<%= quiz.id%>">
+				<button>Take Quiz</button>
+			</a>
+		</div>
+	</div>
+	<% }); %>
+
 
 </div>
+
+
 
 <% include ../partials/footer %>

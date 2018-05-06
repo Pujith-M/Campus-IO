@@ -11,3 +11,26 @@ input[type=radio] {
     width: 30px;
     height: 30px;
 }
+
+.overflow-hiddden{
+	display:block;
+	overflow: hidden;
+}
+
+.quiz-post{
+	margin: 10px 20%;
+}
+
+.question{
+	background-color: #b1d6be;
+	margin-top: 2%;
+	padding: 2%;
+}
+
+.options{
+	float: left;
+}
+
+.padding-bottom{
+	padding-bottom: 2%;
+}
