@@ -1,9 +1,8 @@
 // requiring packages
 var express		=	require('express'),
-router		=	express.Router(),
-User		=	require('../models/user'),
-Quiz		=	require('../models/quiz'),
-middleware 	=	require('../middleware');
+	router		=	express.Router(),
+	User		=	require('../models/user'),
+	middleware 	=	require('../middleware');
 
 
 // render the home page
@@ -16,6 +15,11 @@ router.get('/home', middleware.isLoggedIn, function(req, res) {
 		}
 	});	
 
+});
+
+// render the chatroom page
+router.get('/chatroom', middleware.isLoggedIn, function(req, res) {
+	res.render('user/chatroom');
 });
 
 // render the profile page
@@ -31,7 +35,7 @@ router.get('/:id', middleware.isLoggedIn, function(req, res) {
 });
 
 // Handles the post method of Postes
-router.post('/addNewQuiz', middleware.isLoggedIn, function(req, res) {
+router.post('/post/:Id', middleware.isLoggedIn, function(req, res) {
 	User.findById(req.user._id, function(error, foundUser) {
 		if(error)
 			req.flash('error', 'Something went wrong. Please try again.');

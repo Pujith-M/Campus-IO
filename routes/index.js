@@ -40,14 +40,12 @@ router.post('/register', middleware.usernameToUpperCase, function(req, res) {
 				return res.redirect('register');
 			}
 			passport.authenticate('local')(req, res, function() {
-				// req.flash('success', 'Welcome here, ' + user.firstname + '.');
-				// res.redirect('/user/home');
 				// welcome e-mail to user mail address
 				var smtpTransport = nodemailer.createTransport({
 					service: 'Gmail',
 					auth: {
 						user: 'campus.io.mailer@gmail.com',
-						pass: 'password@b14'
+						pass: 'password goes here'
 					}
 				});
 				var mailOptions = {
@@ -137,7 +135,7 @@ router.post('/forgot', function(req, res, next) {
 				service: 'Gmail', 
 				auth: {
 					user: 'campus.io.mailer@gmail.com',
-					pass: 'password@b14'
+					pass: 'password goes here'
 				}
 			});
 			var mailOptions = {

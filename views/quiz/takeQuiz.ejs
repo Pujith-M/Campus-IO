@@ -1,43 +1,51 @@
-	<% include ../partials/header %>
-	<!-- Custom stylesheet -->
-	<link rel="stylesheet" type="text/css" href="/styles/style.css">
-	<div class="container ">
-		<form action="/quiz/takeQuiz/<%=currentQuiz.id%>" method="POST">
-			<% currentQuiz.questions.forEach(function(question) { %>
-			<div class="media question input-group rounded" >
-				<div class="input-group">
-					<p>
-						<%= question.question%>
-					</p>
-					<br/>
-				</div>
-				<div class="">
-					<% question.options.forEach(function(option) { %>
-					<div style="margin-top: 3px">
-						<input type="radio" id="q156" class="options" style="margin-left: 10px" name="<%= question.id%>" value="<%= option.option%>" > 
-						<label style="margin-left: 10px">
-							<%= option.option%> <br/>
-						</label>
-					</div>
-					<% }); %>
-				</div>
-			</div>
-			<% }); %>
-			<% if (priview) {%>
-			<div class="margin-top">
-				<a href="/quiz/addQuestions/<%=currentQuiz.id%>">
-					<button class="btn btn-primary float-left" type="button">Back</button>
-				</a>
-				<a href="#">
-					<button class="btn btn-primary float-right" type="button">Post</button>					
-				</a>
-			</div>
-			<% }else {%>
-				<div class="form-group" style="margin-top: 2%; text-align: right;">
-					<button class="btn btn-primary" type="submit">Submit</button>
-				</div>	
-			<%}%>
-		</form>
+<% include ../partials/header %>
+<% include ../partials/navbar %>
+<% include ../partials/alert %>
+
+<!-- Custom stylesheet -->
+<link rel="stylesheet" type="text/css" href="/styles/style.css">
+<div class="container ">
+	<div>
+		<h1>
+			<%= currentQuiz.title%>
+		</h1>
 	</div>
-	
-	<% include ../partials/footer %>
+	<form action="/quiz/takeQuiz/<%=currentQuiz.id%>" method="POST">
+		<% currentQuiz.questions.forEach(function(question) { %>
+		<div class="media rounded-box input-group rounded" >
+			<div class="input-group">
+				<p>
+					<%= question.question%>
+				</p>
+				<br/>
+			</div>
+			<div class="">
+				<% question.options.forEach(function(option) { %>
+				<div style="margin-top: 3px">
+					<input type="radio" id="q156" class="options" style="margin-left: 10px" name="<%= question.id%>" value="<%= option.option%>" > 
+					<label style="margin-left: 10px">
+						<%= option.option%> <br/>
+					</label>
+				</div>
+				<% }); %>
+			</div>
+		</div>
+		<% }); %>
+		<% if (priview) {%>
+		<div class="margin-top">
+			<a href="/quiz/addQuestions/<%=currentQuiz.id%>">
+				<button class="btn btn-primary float-left" type="button">Back</button>
+			</a>
+			<a href="#">
+				<button class="btn btn-primary float-right" type="button">Post</button>					
+			</a>
+		</div>
+		<% }else {%>
+		<div class="form-group" style="margin-top: 2%; text-align: right;">
+			<button class="btn btn-primary" type="submit">Submit</button>
+		</div>	
+		<%}%>
+	</form>
+</div>
+
+<% include ../partials/footer %>

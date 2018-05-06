@@ -1,4 +1,6 @@
 <% include ../partials/header %>
+<% include ../partials/navbar %>
+<% include ../partials/alert %>
 
 <div class="container text-center">
 	This is the home page
@@ -8,17 +10,17 @@
 		</button>
 	</div>
 	<% quizzes.forEach(function(quiz) { %>
-	<div class="media jumbotron quiz-post">
+	<div class="media rounded-box quiz-post overflow-hiddden">
 		<div >
 			<img class="rounded mx-auto d-block" src = "<%= quiz.author.avatar %>" alt="Generic placeholder image"> 
-		</div>
-		<div class="media-body">
-			<h6 class="mt-0"> <%= quiz.title%></h6>
 			<h5 class="mt-0"><%= quiz.author.name%></h5>
 		</div>
-		<div style="margin-top: 10%; text-align: center;">
-			<a class="float-right" style="color: white" href="/quiz/takeQuiz/<%= quiz.id%>">
-				<button>Take Quiz</button>
+		<div class="media-body">
+			<h2 class="mt-0" > <%= quiz.title%></h6>
+		</div>
+		<div style="text-align: center; ">
+			<a href="/quiz/takeQuiz/<%= quiz.id%>">
+				<button class="btn btn-outline-success rounded">Take Quiz</button>
 			</a>
 		</div>
 	</div>
@@ -26,7 +28,6 @@
 
 
 </div>
-
 
 
 <% include ../partials/footer %>

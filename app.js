@@ -8,19 +8,17 @@ var express 			= 	require('express'),
 	methodOverride		= 	require('method-override'),
 	flash				=	require('connect-flash');
 
-
 // port configuration
 var port		=	process.env.PORT || 4000;
 
 // requiring models
-var User 		=	require('./models/user'),
+var User 		=	require('./models/user');
 	Quiz 		= 	require('./models/quiz');
 
 // requiring routes
 var indexRoutes	=	require('./routes/index'),
-	userRoutes  = 	require('./routes/user'),
+	userRoutes  = 	require('./routes/user');
 	quizRoutes 		= require('./routes/quiz');
-
 
 // mongodb connection
 mongoose.connect('mongodb://localhost/campus_io');
@@ -62,7 +60,6 @@ app.use(function(req, res, next) {
 app.use('/', indexRoutes);
 app.use('/user/', userRoutes);
 app.use('/quiz/', quizRoutes);
-
 
 // deployment
 app.listen(port, function() {
