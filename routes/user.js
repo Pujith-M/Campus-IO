@@ -49,9 +49,6 @@ router.get('/post/:id', middleware.isLoggedIn, function(req, res) {
 				}
 				else
 				{
-					// foundUser.posts.update(
-						
-					// 	);
 					var post = {
 						author: {
 							id : foundUser._id,
