@@ -10,6 +10,40 @@ router.get('/addNewQuiz', middleware.isLoggedIn, function(req, res) {
 	res.render('quiz/addNewQuiz');
 });
 
+// Adding the title to the quizz
+router.post('/addNewQuiz', middleware.isLoggedIn, function(req, res) {
+	User.findById(req.user._id, function(error, foundUser) {
+		if(error)
+			req.flash('error', 'Something went wrong. Please try again.');
+		else{
+			var newQuiz = new Quiz({
+				title : req.body.title,
+				author : {
+					id : req.user._id
+				}
+			});
+			Quiz.create(newQuiz,function(err, newlyCreated){
+				if(err) {
+					req.flash('error', 'Something went wrong. Please try again.');
+				} else {
+					User.update(
+						{ _id: req.user._id },
+						{ $push: {posts: {title: req.body.title, id: newlyCreated._id}}},
+						function(err, data) {
+							if(err)
+								req.flash('error', 'Something went wrong. Please try again.');
+							else{
+								req.flash('success', 'Successfully created.');
+								res.redirect('/quiz/addQuestions/' + newlyCreated._id);
+							}
+						});
+
+				}
+			})
+		}
+	});
+});
+
 // Adding questions to quiz
 router.get('/addQuestions/:quizId', middleware.isLoggedIn, function(req, res) {
 	Quiz.findById(req.params.quizId, function(error, foundQuiz) {
@@ -27,31 +61,6 @@ router.get('/addQuestions/:quizId', middleware.isLoggedIn, function(req, res) {
 		}
 	});
 });
-// Adding the title to the quizz
-router.post('/addNewQuiz', middleware.isLoggedIn, function(req, res) {
-	User.findById(req.user._id, function(error, foundUser) {
-		if(error)
-			req.flash('error', 'Something went wrong. Please try again.');
-		else{
-			var newQuiz = new Quiz({
-				title : req.body.title,
-				author : {
-					id : req.user._id,
-					name : foundUser.firstname + " " + foundUser.lastname,
-					avatar : foundUser.avatar
-				}
-			});
-			Quiz.create(newQuiz,function(err, newlyCreated){
-				if(err) {
-					req.flash('error', 'Something went wrong. Please try again.');
-				} else {
-					req.flash('success', 'Successfully created.');
-					res.redirect('/quiz/addQuestions/' + newlyCreated._id);
-				}
-			})
-		}
-	});
-});
 
 // Adding the question to the quizz
 router.post('/addQuestions/:quizId', middleware.isLoggedIn, function(req, res) {
@@ -66,7 +75,7 @@ router.post('/addQuestions/:quizId', middleware.isLoggedIn, function(req, res) {
 	Quiz.update(
 		{ _id: req.params.quizId },
 		{ $push: { questions: newQuestion } },
-		function(err, num) {
+		function(err, data) {
 			if(err)
 				req.flash('error', 'Something went wrong. Please try again.');
 			else{
@@ -75,13 +84,13 @@ router.post('/addQuestions/:quizId', middleware.isLoggedIn, function(req, res) {
 		});
 });
 
-//Priview the Quiz
-router.get('/priview/:quizId', middleware.isLoggedIn, function(req, res) {
+//preview the Quiz
+router.get('/preview/:quizId', middleware.isLoggedIn, function(req, res) {
 	Quiz.findById(req.params.quizId, function(error, foundQuiz) {
 		if(error)
 			req.flash('error', 'Something went wrong. Please try again.');
 		else{
-			res.render('quiz/takeQuiz', {currentQuiz: foundQuiz, priview: true});
+			res.render('quiz/takeQuiz', {currentQuiz: foundQuiz, preview: true});
 		}
 	});
 	
@@ -94,7 +103,7 @@ router.get('/takeQuiz/:quizId', middleware.isLoggedIn, function(req, res) {
 		if(error)
 			req.flash('error', 'Something went wrong. Please try again.');
 		else{
-			res.render('quiz/takeQuiz', {currentQuiz: foundQuiz, priview: false});
+			res.render('quiz/takeQuiz', {currentQuiz: foundQuiz, preview: false});
 		}
 	});
 	

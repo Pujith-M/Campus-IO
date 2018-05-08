@@ -2,19 +2,19 @@
 var express		=	require('express'),
 	router		=	express.Router(),
 	User		=	require('../models/user'),
+	Posts		=	require('../models/post'),
 	middleware 	=	require('../middleware');
 
 
 // render the home page
 router.get('/home', middleware.isLoggedIn, function(req, res) {
-	Quiz.find({},"title author", function(err, allQuiz) {
+	Posts.find({}, function(err, allPosts) {
 		if(err) {
 			req.flash('error', 'Something went wrong. Please try again.');
 		} else {
-			res.render('user/home', {quizzes: allQuiz});
+			res.render('user/home', {posts: allPosts});
 		}
-	});	
-
+	});
 });
 
 // render the chatroom page
@@ -34,31 +34,47 @@ router.get('/:id', middleware.isLoggedIn, function(req, res) {
 	});
 });
 
-// Handles the post method of Postes
-router.post('/post/:Id', middleware.isLoggedIn, function(req, res) {
-	User.findById(req.user._id, function(error, foundUser) {
-		if(error)
-			req.flash('error', 'Something went wrong. Please try again.');
+// handles the post method of Posts
+router.get('/post/:id', middleware.isLoggedIn, function(req, res) {
+	Quiz.findById(req.params.id, function(err, foundQuiz) {
+		if (err) {
+			req.flash('error', 'Quiz not found');
+			res.redirect('/user/home');
+		}
 		else{
-			var newQuiz = new Quiz({
-				title : req.body.title,
-				author : {
-					id : req.user._id,
-					name : foundUser.firstname + " " + foundUser.lastname,
-					avatar : foundUser.avatar
+			User.findById(req.user._id, function(err, foundUser) {
+				if (err) {
+					req.flash('error', 'User not found');
+					res.redirect('/user/home');
+				}
+				else
+				{
+					// foundUser.posts.update(
+						
+					// 	);
+					var post = {
+						author: {
+							id : foundUser._id,
+							name : foundUser.firstname + foundUser.lastname,
+							avatar: foundUser.avatar
+						},
+						title: foundQuiz.title,
+						postId: foundQuiz._id,
+					}
+					Posts.create(post ,function(err, newlyCreated){
+						if (err) {
+							req.flash('error', 'Quiz already posted');
+							res.redirect('/user/' + foundUser._id);
+						}
+						else{
+							req.flash('success', 'Quiz sucessfully posted');
+							res.redirect('/user/' + foundUser._id);
+						}
+					});
 				}
 			});
-			Quiz.create(newQuiz,function(err, newlyCreated){
-				if(err) {
-					req.flash('error', 'Something went wrong. Please try again.');
-				} else {
-					req.flash('success', 'Successfully created.');
-					res.redirect('/quiz/addQuestions/' + newlyCreated._id);
-				}
-			})
-		}
+		}	
 	});
 });
-
 
 module.exports 	=	router;

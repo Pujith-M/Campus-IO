@@ -9,24 +9,22 @@
 			<a class="float-right" style="color: white" href="/quiz/addNewQuiz">Create Quiz</a>
 		</button>
 	</div>
-	<% quizzes.forEach(function(quiz) { %>
+	<% posts.forEach(function(post) { %>
 	<div class="media rounded-box quiz-post overflow-hiddden">
 		<div >
-			<img class="rounded mx-auto d-block" src = "<%= quiz.author.avatar %>" alt="Generic placeholder image"> 
-			<h5 class="mt-0"><%= quiz.author.name%></h5>
+			<img class="rounded mx-auto d-block" src = "<%= post.author.avatar %>" alt="Generic placeholder image"> 
+			<h5 class="mt-0"><%= post.author.name%></h5>
 		</div>
 		<div class="media-body">
-			<h2 class="mt-0" > <%= quiz.title%></h6>
+			<h2 class="mt-0" > <%= post.title%></h6>
 		</div>
 		<div style="text-align: center; ">
-			<a href="/quiz/takeQuiz/<%= quiz.id%>">
+			<a href="/quiz/takeQuiz/<%= post.postId%>">
 				<button class="btn btn-outline-success rounded">Take Quiz</button>
 			</a>
 		</div>
 	</div>
 	<% }); %>
-
-
 </div>
 
 

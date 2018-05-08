@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 
 var postSchema = new mongoose.Schema({
-	title : {type: String, required: true},
 	author : {
 				id: {
 					type: mongoose.Schema.Types.ObjectId,
@@ -11,9 +10,12 @@ var postSchema = new mongoose.Schema({
 				avatar: {type: String, required: true}
 
 	},
-	post : {
-		type : {type: String, default: "Quiz"},
-		id : type: mongoose.Schema.Types.ObjectId
+	title : {type: String, required: true},
+	postType: {type: String, default: "quiz"},
+	postId: {
+			type: mongoose.Schema.Types.ObjectId,
+			unique: true,
+			required: true
 	}
 });
 
