@@ -6,19 +6,22 @@ var express 			= 	require('express'),
 	passport			= 	require('passport'),
 	LocalStrategy 		= 	require('passport-local'),
 	methodOverride		= 	require('method-override'),
-	flash				=	require('connect-flash');
+	flash				=	require('connect-flash'),
+	http				=	require('http').Server(app),
+	io 					=	require('socket.io')(http);
 
 // port configuration
 var port		=	process.env.PORT || 4000;
+	Quiz 		= 	require('./models/quiz');
+	quizRoutes 		= require('./routes/quiz');
+
 
 // requiring models
 var User 		=	require('./models/user');
-	Quiz 		= 	require('./models/quiz');
 
 // requiring routes
 var indexRoutes	=	require('./routes/index'),
 	userRoutes  = 	require('./routes/user');
-	quizRoutes 		= require('./routes/quiz');
 
 // mongodb connection
 mongoose.connect('mongodb://localhost/campus_io');
@@ -61,7 +64,15 @@ app.use('/', indexRoutes);
 app.use('/user/', userRoutes);
 app.use('/quiz/', quizRoutes);
 
+
+// socket.io connection
+io.on('connection', function(socket) {
+	socket.on('chat message', function(msg) {
+    	io.emit('chat message', msg);
+  	});
+});
+
 // deployment
-app.listen(port, function() {
+http.listen(port, function() {
 	console.log('Server online at port ' + port);
 });

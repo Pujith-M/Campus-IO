@@ -8,9 +8,9 @@ a:hover {
 }
 
 #myForm {
-	background-color: #c2c2c2;
+	background-color: rgba(161, 161, 161, 0.75);
 	border-radius: 15px;
-	padding: 15px; 
+	padding: 15px;
 }
 
 #homeLogo {
@@ -21,8 +21,38 @@ a:hover {
 	color: #000000;
 }
 
+#alertWindow {
+	position: absolute;
+	z-index: 1;
+}
+
+#messages 
+{ 
+	list-style-type: none; 
+	margin: 0; 
+	padding: 0; 
+}
+
+#chatWindow #messages {
+	height: 450px;
+	overflow: hidden;
+	overflow-y: scroll; 
+}
+
+#messages li { 
+	padding: 10px 15px; 
+}
+
+#messages li:nth-child(odd) { 
+	background: #eee; 
+}
+
+#messageBox {
+	padding-top: 20px;
+}
+
 /*Changes done by pujith*/
-input[type=radio] {
+.myRadioButton {
     width: 30px;
     height: 30px;
 }

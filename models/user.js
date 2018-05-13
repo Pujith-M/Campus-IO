@@ -6,6 +6,8 @@ var userSchema = new mongoose.Schema({
 	lastname: {type: String, required: true},
 	username: {type: String, required: true, unique: true},
 	email: {type: String, required: true, unique: true},
+	college: {type: String},
+	branch: {type: String},
 	avatar: {type: String, default: 'https://www.drupal.org/files/profile_default.png'},
 	password: String,
 	resetPasswordToken: String,
@@ -13,15 +15,15 @@ var userSchema = new mongoose.Schema({
 	isAdmin: {type: Boolean, default: false},
 	isSupport: {type: Boolean, default: false},
 	posts: [
-		{
-			id : {
-					type: mongoose.Schema.Types.ObjectId,
-					ref: 'User',
-					required: true
-				},
-			title: {type: String, required: true},
-			status: {type: Boolean, required: true, default: false},
-		}
+	{
+		id : {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Quiz',
+			required: true
+		},
+		title: {type: String, required: true},
+		status: {type: Boolean, required: true, default: false},
+	}
 	]
 });
 

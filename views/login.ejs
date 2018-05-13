@@ -1,5 +1,16 @@
 <% include partials/header %>
+
+<link rel="stylesheet" type="text/css" href="/styles/landing.css">
+
 <% include partials/alert %>
+
+<ul class="slideshow">
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
 
 <div class="container">
 	<form class="col-md-4 offset-md-4" id="myForm" action="/login" method="POST">
@@ -11,7 +22,7 @@
 		</div>
 		<legend class="text-center">Log In or <a href="/register">Create a new account</a></legend>
 		<div class="form-group">
-			<label for="username">USN</label>
+			<label for="username">USN or Username</label>
 			<input class="form-control" type="text"	name="username" id="username" autofocus>
 			<small class="form-text text-muted">
 				Make sure alphabets are uppercase.

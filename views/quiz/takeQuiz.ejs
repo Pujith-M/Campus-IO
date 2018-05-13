@@ -26,7 +26,7 @@ function shuffleArray(array) {
 		<%shuffleArray(currentQuiz.questions)%>
 		<%}%>
 		<% currentQuiz.questions.forEach(function(question) { %>
-		<div class="media rounded-box input-group rounded" >
+		<div class="input-group rounded card-header" >
 			<div class="input-group">
 				<p>
 					<%= question.question%>
@@ -39,7 +39,7 @@ function shuffleArray(array) {
 				<%}%>
 				<% question.options.forEach(function(option) { %>
 				<div style="margin-top: 3px">
-					<input type="radio" id="q156" class="options" style="margin-left: 10px" name="<%= question.id%>" value="<%= option.option%>" > 
+					<input type="radio" id="q156" class="myRadioButton options" style="margin-left: 10px" name="<%= question.id%>" value="<%= option.option%>" > 
 					<label style="margin-left: 10px">
 						<%= option.option%> <br/>
 					</label>

@@ -16,6 +16,7 @@ function addTextField(questionNum) {
 	radioButton.name = "answer";
 	radioButton.required = "true";
 	radioButton.id = "q156";
+	radioButton.className = "myRadioButton";
 	radioButton.value = "option" + questionNum;
 
 	divInnerElement.className = "input-group-prepend input-group-text";
