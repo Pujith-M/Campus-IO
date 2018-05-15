@@ -1,5 +1,8 @@
 body {
-	font-family: 'Lato', sans-serif;
+	/*font-family: 'Pangolin', cursive;*/
+	/*font-family: 'Lato', sans-serif;*/
+	font-family: 'Dosis', sans-serif;
+	/*font-family: 'Quicksand', sans-serif;*/
 	background-color: #f5f5f5;
 }
 
@@ -57,45 +60,85 @@ a:hover {
     height: 30px;
 }
 
-.overflow-hiddden{
+.overflow-hiddden {
 	display:block;
 	overflow: hidden;
 }
 
-.quiz-post{
+.quiz-post {
 	margin: 10px 20%;
 }
 
-.rounded-box{
+.rounded-box {
 	background-color: #BDBDBD;
 	margin-top: 2%;
 	padding: 2%;
 }
 
-.options{
+.options {
 	float: left;
 }
 
-.margin-bottom{
+.margin-bottom {
 	margin-bottom: 2%;
 }
 .margin-top {
 	margin-top : 2%;
 }
 
-.margin-right{
+.margin-right {
 	margin-right: 2%;
 }
 
-.padding-left{
+.padding-left {
 	padding-left: 12%;
 }
 
-.padding-right{
+.padding-right {
 	padding-right: 2%;
 }
 
-.padding-2{
+.padding-2 {
 	padding: 2%; 
 }
-/*^Changes changes by Pujith*/
+
+.bargraph {
+	padding-top: 20px;
+	text-align: left;
+	background: #f5f5f5;
+}
+
+.bargraph p {
+	height: 35px;
+	color: white;
+	font-size: 14px;
+	line-height: 35px;
+	padding: 0px 0px;
+    margin-bottom: 5px;
+}
+
+.bargraph p.topper {
+	background: #428bca;
+}
+
+.bargraph p.average {
+	background: #428bca;	
+}
+
+.bargraph p.you {
+	background: #428bca;
+}
+
+#mySearch {
+	width: 20%;
+    background-image: url('https://www.w3schools.com/howto/searchicon.png');
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding: 8px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+#mySearch:focus {
+	width: 100%;
+}

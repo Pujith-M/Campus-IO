@@ -9,23 +9,30 @@ var userSchema = new mongoose.Schema({
 	college: {type: String},
 	branch: {type: String},
 	avatar: {type: String, default: 'https://www.drupal.org/files/profile_default.png'},
+	avatarId: {type: String},
 	password: String,
 	resetPasswordToken: String,
 	resetPasswordExpires: Date,
 	isAdmin: {type: Boolean, default: false},
 	isSupport: {type: Boolean, default: false},
-	posts: [
-	{
+	quizzes: [{
 		id : {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Quiz',
-			required: true
+			ref: 'Quiz'
+			// required: true
+			// unique: true
 		},
 		title: {type: String, required: true},
-		status: {type: Boolean, required: true, default: false},
-	}
-	]
-});
+		isPosted: {type: Boolean, default: false},
+		score : {type: Number, default: 0.0}
+	}],
+	oop: {sum: {type: Number, default: 0.0}, numberOfQuizzes: {type: Number, default:0} },
+	ds: {sum: {type: Number, default: 0.0}, numberOfQuizzes: {type: Number, default:0} },
+	dbs: {sum: {type: Number, default: 0.0}, numberOfQuizzes: {type: Number, default:0} },
+	nw: {sum: {type: Number, default: 0.0}, numberOfQuizzes: {type: Number, default:0} },
+	os: {sum: {type: Number, default: 0.0}, numberOfQuizzes: {type: Number, default:0} },
+	apt: {sum: {type: Number, default: 0.0}, numberOfQuizzes: {type: Number, default:0} 
+}});
 
 userSchema.plugin(passportLocalMongoose);
 
