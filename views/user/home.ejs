@@ -5,20 +5,11 @@
 <%
 function checkUserHasTakenQuiz(quiz) {
 	for (var i = 0; i < quiz.takenByUsers.length; i++) {
-		console.log(quiz.takenByUsers);
-		console.log(userId);
 		if (quiz.takenByUsers[i].id.equals(userId)) {
 			return false;
 		}
 	}
 	return true;
-
-	// quiz.takenByUsers.forEach(function(user){
-	// 	if (user.id.equals(userId)) {
-	// 		return false;
-	// 	}
-	// });
-	// return true;
 }
 %>
 
@@ -56,36 +47,6 @@ function checkUserHasTakenQuiz(quiz) {
 			<%}%>
 			<% }); %>
 		</ul>
-
-
-
-
-
-
-		<% allQuizzes.forEach(function(quiz) { %>
-			<div class="media rounded-box quiz-post overflow-hiddden">
-				<div >
-					<img class="rounded mx-auto d-block" src = "<%= quiz.author.avatar %>" alt="Generic placeholder image"> 
-					<h5 class="mt-0"><%= quiz.author.name%></h5>
-				</div>
-				<div class="media-body">
-					<h2 class="mt-0" > <%= quiz.title%></h6>
-				</div>
-				<%if(checkUserHasTakenQuiz(quiz)){%>
-					<div style="text-align: center; ">
-						<a href="/quiz/viewResult/<%= quiz._id%>">
-							<button class="btn btn-outline-success rounded">View Results</button>
-						</a>
-					</div>
-				<%}else {%>
-					<div style="text-align: center; ">
-						<a href="/quiz/take/<%= quiz._id%>">
-							<button class="btn btn-outline-success rounded">Take Quiz</button>
-						</a>
-					</div>
-				<%}%>
-			</div>
-		<% }); %>
 	<%}%>
 </div>
 
