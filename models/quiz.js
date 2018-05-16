@@ -23,7 +23,7 @@ var quizSchema = new mongoose.Schema({
 					answer : {type: String, required: true}
 				}
 	],
-	takenByStudent : [
+	takenByUsers : [
 	        {
 	        	name : {type: String, required: true},
 	        	id : {

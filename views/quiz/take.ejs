@@ -54,14 +54,20 @@ function shuffleArray(array) {
 		</div>
 		<% }); %>
 		<% if (preview) {%>
-		<div class="margin-top">
-			<a href="/quiz/addQuestions/<%=currentQuiz.id%>">
-				<button class="btn btn-info float-left" type="button">Back</button>
-			</a>
-			<a href="/user/post/<%= currentQuiz.id%>">
-				<button class="btn btn-info float-right" type="button">Post</button>					
-			</a>
-		</div>
+			<div class="margin-top">
+				<a href="/quiz/addQuestions/<%=currentQuiz.id%>">
+					<button class="btn btn-info float-left" type="button">Back</button>
+				</a>
+				<% if (!currentQuiz.isPosted) {%>
+					<a href="/user/post/<%= currentQuiz.id%>">
+						<button class="btn btn-info float-right" type="button">Post</button>					
+					</a>
+				<%}else{%>
+					<a href="#"<%= currentQuiz.id%>">
+						<button class="btn btn-info float-right" type="button">View results</button>					
+					</a>
+				<%}%>
+			</div>
 		<% }else {%>
 		<div class="form-group" style="margin-top: 2%; text-align: right;">
 			<button class="btn btn-info" type="submit">Submit</button>

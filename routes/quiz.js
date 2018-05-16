@@ -1,9 +1,9 @@
 // requiring packages
 var express		=	require('express'),
-router		=	express.Router(),
-User		=	require('../models/user'),
-Quiz		=	require('../models/quiz'),
-middleware 	=	require('../middleware');
+	router		=	express.Router(),
+	User		=	require('../models/user'),
+	Quiz		=	require('../models/quiz'),
+	middleware 	=	require('../middleware');
 
 // Crating new quiz
 router.get('/add', middleware.isLoggedIn, function(req, res) {
@@ -132,14 +132,27 @@ router.get('/take/:quizId', middleware.isLoggedIn, function(req, res) {
 				req.flash('error', 'Something went wrong. Please try again.');
 			else{
 				var taken = false;
-				foundQuiz.takenByStudent.forEach(function(quiz){
-					console.log(quiz , quiz["id"], req.user._id);
+				foundQuiz.takenByUsers.forEach(function(quiz){
 					if (quiz.id.equals(req.user._id)) {
 						taken = true;
 					}
 				});
 				if (!taken) {
-					res.render('quiz/take', {currentQuiz: foundQuiz, preview: false});
+					Quiz.update(
+						{ _id: req.params.quizId },
+						{ $push: {takenByUsers: { 
+							name: req.user.firstname + " " + req.user.lastname,
+							id: req.user._id,
+							score: 0
+						}
+					}},function(err, updatedQuiz) {
+						if(err) {
+							req.flash('error', 'Something went wrong. Please try again.');
+							res.redirect('/user/home');
+						} else {
+							res.render('quiz/take', {currentQuiz: foundQuiz, preview: false});
+						}
+					});
 				}
 				else{
 					req.flash('error', 'You have already taken quiz.');
@@ -158,7 +171,7 @@ router.post('/take/:quizId', middleware.isLoggedIn, function(req, res) {
 	if (!req.user.isSupport) {
 		Quiz.findById(req.params.quizId, function(error, foundQuiz) {
 			if(error){
-				req.flash('error', 'Something went wrong. Please try again.');
+				req.flash('error', 'Something went wrong1. Please try again.', error);
 				res.redirect('/user/home');
 			}
 			else{
@@ -169,23 +182,21 @@ router.post('/take/:quizId', middleware.isLoggedIn, function(req, res) {
 					}
 				}
 				var score = result/foundQuiz.questions.length;
-				Quiz.update(
-					{ _id: req.params.quizId },
-					{ $push: {takenByStudent: { 
-						name: req.user.firstname + " " + req.user.lastname,
-						id: req.user._id,
-						score: score
+				for (var i = 0; i < foundQuiz.takenByUsers.length; i++) {
+					if(foundQuiz.takenByUsers[i].id.equals(req.user._id)){
+						foundQuiz.takenByUsers[i].score = score;
+						break;
 					}
-				}},
-				function(err, updatedQuiz) {
+				}
+				Quiz.findByIdAndUpdate(foundQuiz._id,foundQuiz,function(err, updatedQuiz) {
 					if(err){
-						req.flash('error', 'Something went wrong. Please try again.');
+						req.flash('error', 'Something went wrong2. Please try again.');
 						res.redirect('/user/home');
 					}
 					else{
 						User.findById(req.user._id,function(err, foundUser) {
 							if (err) {
-								req.flash('error', 'Something went wrong. Please try again.');
+								req.flash('error', 'Something went wrong3. Please try again.');
 								res.redirect('/user/home');
 							}
 							foundUser[foundQuiz.category].sum += score;
@@ -197,7 +208,7 @@ router.post('/take/:quizId', middleware.isLoggedIn, function(req, res) {
 							});
 							User.findByIdAndUpdate(foundUser._id, foundUser, function(err, updatedUser) {
 								if(err) {
-									req.flash('error', 'Something went wrong. Please try again.');
+									req.flash('error', 'Something went wrong4. Please try again.');
 									res.redirect('/user/home');
 								} else {
 									req.flash('success', 'Successfully updated.');
@@ -215,6 +226,5 @@ router.post('/take/:quizId', middleware.isLoggedIn, function(req, res) {
 		res.redirect('/user/home');
 	}
 });
-
 
 module.exports 	=	router;

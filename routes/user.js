@@ -93,6 +93,17 @@ router.get('/show', middleware.isLoggedIn, function(req, res) {
 	}
 });
 
+// render the leaderboard page
+router.get('/leaderboard', middleware.isLoggedIn, function(req, res) {
+	User.find({isSupport: false}, function(err, allStudentUsers) {
+		if (err) {
+			req.flash('error', 'Something went wrong. Try again.');
+			return res.redirect('/user/home');
+		}
+		res.render('user/leaderboard', {allUsers: allStudentUsers});
+	});
+});
+
 // render the profile page
 router.get('/:id', middleware.isLoggedIn, function(req, res) {
 	User.findById(req.params.id, function(err, foundUser) {
@@ -164,7 +175,6 @@ router.get('/post/:id', middleware.isLoggedIn, function(req, res) {
 	   }
 	});
 });
-
 function escapeRegex(text) {
 	return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };

@@ -15,6 +15,8 @@
 		<% if (currentUser.username === user.username) { %>
 			<a href="/user/<%= user._id %>/edit">Edit Profile</a>
 		<% } %>
+	</div>
+		<!-- Retrive all Quizzes of current teacher -->
 		<%if(user.isSupport) {%>
 		<div class="card padding-2">
 			<% user.quizzes.forEach(function(quiz) { %>
@@ -53,6 +55,7 @@
 			</div>
 			<%});%>
 		<%}%>
+
 			<% if (!user.isSupport) { %>
 				<strong>Object Oriented Programming</strong>
 				<div class="bargraph">
@@ -60,8 +63,10 @@
 					<p class="topper" style="width: 100%"></p>
 					College Average
 					<p class="average" style="width: 40%"></p>
-					You: <%= user.oop %> %
-					<p class="you" style="width: <%= user.oop %>%"></p>
+					<% var oop = (user.oop.sum/user.oop.numberOfQuizzes * 100) %>
+					<% if(user.oop.numberOfQuizzes == 0){ oop = 0;} %>
+					You:  <%= oop %>%
+					<p class="you" style="width: <%= oop %>%"></p>
 				</div>
 				<br><br>
 				<strong>Data Structures and Algorithms</strong>
@@ -70,8 +75,10 @@
 					<p class="topper" style="width: 100%"></p>
 					College Average
 					<p class="average" style="width: 40%"></p>
-					You: <%= user.ds %> %
-					<p class="you" style="width: <%= user.ds %>%"></p>
+					<% var ds = (user.ds.sum/user.ds.numberOfQuizzes * 100) %>
+					<% if(user.ds.numberOfQuizzes == 0){ ds = 0;} %>
+					You: <%=ds%> %
+					<p class="you" style="width: <%= ds %>%"></p>
 				</div>
 				<br><br>
 				<strong>Databases and DBMS</strong>
@@ -80,8 +87,10 @@
 					<p class="topper" style="width: 100%"></p>
 					College Average
 					<p class="average" style="width: 40%"></p>
-					You: <%= user.dbs %> %
-					<p class="you" style="width: <%= user.dbs %>%"></p>
+					<% var dbs = (user.dbs.sum/user.dbs.numberOfQuizzes * 100)%>
+					<% if(user.dbs.numberOfQuizzes == 0){ dbs = 0;} %>
+					You: <%= dbs%> %
+					<p class="you" style="width: <%= dbs %>%"></p>
 				</div>
 				<br><br>
 				<strong>Networks</strong>
@@ -90,8 +99,10 @@
 					<p class="topper" style="width: 100%"></p>
 					College Average
 					<p class="average" style="width: 40%"></p>
-					You: <%= user.nw %> %
-					<p class="you" style="width: <%= user.nw %>%"></p>
+					<% var nw = (user.nw.sum/user.nw.numberOfQuizzes * 100)%>
+					<% if(user.nw.numberOfQuizzes == 0){ nw = 0;} %>
+					You: <%= nw%> %
+					<p class="you" style="width: <%= nw %>%"></p>
 				</div>
 				<br><br>
 				<strong>Operating Systems</strong>
@@ -100,18 +111,22 @@
 					<p class="topper" style="width: 100%"></p>
 					College Average
 					<p class="average" style="width: 40%"></p>
-					You: <%= user.os %> %
-					<p class="you" style="width: <%= user.os %>%"></p>
+					<% var os = (user.os.sum/user.os.numberOfQuizzes * 100)%>
+					<% if(user.os.numberOfQuizzes == 0){ os = 0;} %>
+					You: <%= os %> %
+					<p class="you" style="width: <%= os %>%"></p>
 				</div>
-				<!-- <br><br> -->
+				<br><br>
 				<strong>General Aptitude</strong>
 				<div class="bargraph">
 					College Topper
 					<p class="topper" style="width: 100%"></p>
 					College Average
 					<p class="average" style="width: 40%"></p>
-					You: <%= user.apt %> %
-					<p class="you" style="width: <%= user.apt %>%"></p>
+					<% var apt = (user.apt.sum/user.apt.numberOfQuizzes * 100)%>
+					<% if(user.apt.numberOfQuizzes == 0){ apt = 0;} %>
+					You: <%= apt %> %
+					<p class="you" style="width: <%= apt %>%"></p>
 				</div>
 				<br><br>
 			<% } %>
