@@ -18,9 +18,8 @@ var userSchema = new mongoose.Schema({
 	quizzes: [{
 		id : {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Quiz'
-			// required: true
-			// unique: true
+			ref: 'Quiz',
+			required: true
 		},
 		title: {type: String, required: true},
 		isPosted: {type: Boolean, default: false},
@@ -31,8 +30,8 @@ var userSchema = new mongoose.Schema({
 	dbs: {sum: {type: Number, default: 0.0}, numberOfQuizzes: {type: Number, default:0} },
 	nw: {sum: {type: Number, default: 0.0}, numberOfQuizzes: {type: Number, default:0} },
 	os: {sum: {type: Number, default: 0.0}, numberOfQuizzes: {type: Number, default:0} },
-	apt: {sum: {type: Number, default: 0.0}, numberOfQuizzes: {type: Number, default:0} 
-}});
+	apt: {sum: {type: Number, default: 0.0}, numberOfQuizzes: {type: Number, default:0}}
+});
 
 userSchema.plugin(passportLocalMongoose);
 

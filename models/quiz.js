@@ -28,9 +28,8 @@ var quizSchema = new mongoose.Schema({
 	        	name : {type: String, required: true},
 	        	id : {
 	        	            type: mongoose.Schema.Types.ObjectId,
-	        	            ref: 'User'
-	        	            // required: true,
-	        	            // unique: true
+	        	            ref: 'User',
+	        	            required: true
 	        	        }, 
 	        	score : {type: Number, required: true, default : 0.0}  
 	        }      
