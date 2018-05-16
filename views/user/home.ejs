@@ -23,15 +23,13 @@ function checkUserHasTakenQuiz(quiz) {
 	<%if(!isSupport){%>
 		<ul class="list-group">
 			<% allQuizzes.forEach(function(quiz) { %>
-				<!-- <a class="nav-link" href="/user/<%=  %>"> -->
-					<li class="list-group-item">
-						<div>
-							<img class="rounded-circle float-left" src="<%= quiz.author.avatar %>" height="57px" width="57px">
-							<h5 class="mt-0 float-left"><%= quiz.author.name%></h5>
-						</div>
-						<h2><%= quiz.title %></h2>
-					</li>
-				<!-- </a> -->
+				<li class="list-group-item">
+					<div>
+						<img class="rounded-circle float-left" src="<%= quiz.author.avatar %>" height="57px" width="57px">
+						<h5 class="mt-0 float-left"><%= quiz.author.name%></h5>
+					</div>
+					<h2><%= quiz.title %></h2>
+				</li>
 			<%if(!checkUserHasTakenQuiz(quiz)){%>
 				<div style="text-align: center; ">
 					<a href="/quiz/viewResult/<%= quiz._id%>">

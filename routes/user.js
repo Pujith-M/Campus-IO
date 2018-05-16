@@ -111,7 +111,53 @@ router.get('/:id', middleware.isLoggedIn, function(req, res) {
 			req.flash('error', 'Profile does not exist.');
 			res.redirect('/user/home');
 		} else {
-			res.render('user/profile', {user: foundUser});
+			User.find({isSupport: false},function(err, allUsers) {
+				var collegeTopper = {
+					oop		: 0,
+					ds  	: 0,
+					dbs		: 0,
+					nw 		: 0,
+					os 		: 0,
+					apt		: 0				
+				}
+				var collegeAverage = {
+					oop		: 0,
+					ds  	: 0,
+					dbs		: 0,
+					nw 		: 0,
+					os 		: 0,
+					apt		: 0
+				}
+				allUsers.forEach(function(user) {
+					var oop = (user.oop.numberOfQuizzes > 0 ? user.oop.sum / user.oop.numberOfQuizzes * 100 : 0);
+					collegeTopper.oop = (collegeTopper.oop > oop ? collegeTopper : oop);
+					collegeAverage.oop += oop;
+					var ds = (user.ds.numberOfQuizzes > 0 ? user.ds.sum / user.ds.numberOfQuizzes * 100 : 0);
+					collegeTopper.ds = (collegeTopper.ds > ds ? collegeTopper : ds);
+					collegeAverage.ds += ds;
+					var dbs = (user.dbs.numberOfQuizzes > 0 ? user.dbs.sum / user.dbs.numberOfQuizzes * 100 : 0);
+					collegeTopper.dbs = (collegeTopper.dbs > dbs ? collegeTopper : dbs);
+					collegeAverage.dbs += dbs;
+					var nw = (user.nw.numberOfQuizzes > 0 ? user.nw.sum / user.nw.numberOfQuizzes * 100 : 0);
+					collegeTopper.nw = (collegeTopper.nw > nw ? collegeTopper : nw);
+					collegeAverage.nw += nw;
+					var os = (user.os.numberOfQuizzes > 0 ? user.os.sum / user.os.numberOfQuizzes * 100 : 0);
+					collegeTopper.os = (collegeTopper.os > os ? collegeTopper : os);
+					collegeAverage.os += os;
+					var apt = (user.apt.numberOfQuizzes > 0 ? user.apt.sum / user.apt.numberOfQuizzes * 100 : 0);
+					collegeTopper.apt = (collegeTopper.apt > apt ? collegeTopper : apt);
+					collegeAverage.apt += apt;
+				});
+				collegeAverage.oop /= allUsers.length;
+				collegeAverage.ds /= allUsers.length;
+				collegeAverage.dbs /= allUsers.length;
+				collegeAverage.nw /= allUsers.length;
+				collegeAverage.os /= allUsers.length;
+				collegeAverage.apt /= allUsers.length;
+				console.log(collegeTopper,collegeAverage);
+
+				res.render('user/profile', {user: foundUser, collegeAverage: collegeAverage, collegeTopper: collegeTopper});
+			})
 		}
 	});
 });
