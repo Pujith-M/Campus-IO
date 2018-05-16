@@ -2,6 +2,26 @@
 <% include ../partials/navbar %>
 <% include ../partials/alert %>
 
+<%
+function checkUserHasTakenQuiz(quiz) {
+	for (var i = 0; i < quiz.takenByUsers.length; i++) {
+		console.log(quiz.takenByUsers);
+		console.log(userId);
+		if (quiz.takenByUsers[i].id.equals(userId)) {
+			return false;
+		}
+	}
+	return true;
+
+	// quiz.takenByUsers.forEach(function(user){
+	// 	if (user.id.equals(userId)) {
+	// 		return false;
+	// 	}
+	// });
+	// return true;
+}
+%>
+
 <div class="container text-center">
 	This is the home page
 	<div class="form-group">
@@ -10,8 +30,39 @@
 		</button>
 	</div>
 	<%if(!isSupport){%>
+		<ul class="list-group">
+			<% allQuizzes.forEach(function(quiz) { %>
+				<!-- <a class="nav-link" href="/user/<%=  %>"> -->
+					<li class="list-group-item">
+						<div>
+							<img class="rounded-circle float-left" src="<%= quiz.author.avatar %>" height="57px" width="57px">
+							<h5 class="mt-0 float-left"><%= quiz.author.name%></h5>
+						</div>
+						<h2><%= quiz.title %></h2>
+					</li>
+				<!-- </a> -->
+			<%if(!checkUserHasTakenQuiz(quiz)){%>
+				<div style="text-align: center; ">
+					<a href="/quiz/viewResult/<%= quiz._id%>">
+						<button class="btn btn-outline-success rounded">View Results</button>
+					</a>
+				</div>
+			<%}else {%>
+				<div style="text-align: center; ">
+					<a href="/quiz/take/<%= quiz._id%>">
+						<button class="btn btn-outline-success rounded">Take Quiz</button>
+					</a>
+				</div>
+			<%}%>
+			<% }); %>
+		</ul>
+
+
+
+
+
+
 		<% allQuizzes.forEach(function(quiz) { %>
-			<% //if (quiz.takenByStudent.find(function(currentUser._id){})) { %>
 			<div class="media rounded-box quiz-post overflow-hiddden">
 				<div >
 					<img class="rounded mx-auto d-block" src = "<%= quiz.author.avatar %>" alt="Generic placeholder image"> 
@@ -20,11 +71,19 @@
 				<div class="media-body">
 					<h2 class="mt-0" > <%= quiz.title%></h6>
 				</div>
-				<div style="text-align: center; ">
-					<a href="/quiz/take/<%= quiz._id%>">
-						<button class="btn btn-outline-success rounded">Take Quiz</button>
-					</a>
-				</div>
+				<%if(checkUserHasTakenQuiz(quiz)){%>
+					<div style="text-align: center; ">
+						<a href="/quiz/viewResult/<%= quiz._id%>">
+							<button class="btn btn-outline-success rounded">View Results</button>
+						</a>
+					</div>
+				<%}else {%>
+					<div style="text-align: center; ">
+						<a href="/quiz/take/<%= quiz._id%>">
+							<button class="btn btn-outline-success rounded">Take Quiz</button>
+						</a>
+					</div>
+				<%}%>
 			</div>
 		<% }); %>
 	<%}%>

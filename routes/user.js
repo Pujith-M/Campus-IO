@@ -39,7 +39,7 @@ router.get('/home', middleware.isLoggedIn, function(req, res) {
 		if(err) {
 			req.flash('error', 'Something went wrong. Please try again.');
 		} else {
-			res.render('user/home', {allQuizzes: allQuizzes, isSupport: req.user.isSupport});
+			res.render('user/home', {allQuizzes: allQuizzes, isSupport: req.user.isSupport, userId: req.user._id});
 		}
 	});
 });

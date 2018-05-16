@@ -1,9 +1,9 @@
 // requiring packages
 var express		=	require('express'),
-	router		=	express.Router(),
-	User		=	require('../models/user'),
-	Quiz		=	require('../models/quiz'),
-	middleware 	=	require('../middleware');
+router		=	express.Router(),
+User		=	require('../models/user'),
+Quiz		=	require('../models/quiz'),
+middleware 	=	require('../middleware');
 
 // Crating new quiz
 router.get('/add', middleware.isLoggedIn, function(req, res) {
@@ -212,8 +212,7 @@ router.post('/take/:quizId', middleware.isLoggedIn, function(req, res) {
 									res.redirect('/user/home');
 								} else {
 									req.flash('success', 'Successfully updated.');
-									res.render('quiz/viewResult',{score : result,maxScore : foundQuiz.questions.length});
-								}
+									res.redirect("/quiz/viewResult/" + foundQuiz._id)								}
 							});
 						})
 					}
@@ -225,6 +224,17 @@ router.post('/take/:quizId', middleware.isLoggedIn, function(req, res) {
 		req.flash('error', 'You are not allowed to take quiz');
 		res.redirect('/user/home');
 	}
+});
+
+//preview the Quiz
+router.get('/viewResult/:quizId', middleware.isLoggedIn, function(req, res) {
+	Quiz.findById(req.params.quizId, function(error, foundQuiz) {
+		if(error)
+			req.flash('error', 'Something went wrong. Please try again.');
+		else{
+			res.render('quiz/viewResult', {currentQuiz: foundQuiz});
+		}
+	});
 });
 
 module.exports 	=	router;
