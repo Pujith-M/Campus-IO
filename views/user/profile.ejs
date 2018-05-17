@@ -20,7 +20,7 @@
 
 		<!-- Details to be displayed for student profile -->
 
-		<% if (!user.isSupport) { %>
+		<% if ((!user.isSupport) && (user === currentUser)) { %>
 
 		
 		<strong>Object Oriented Programming</strong>
