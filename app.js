@@ -27,6 +27,7 @@ var indexRoutes	=	require('./routes/index'),
 mongoose.connect('mongodb://localhost/campus_io');
 // , {useMongoClient: true});
 
+
 // custom middleware
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');

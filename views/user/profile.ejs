@@ -124,10 +124,12 @@
 						<h4><%= quiz.title %></h4>
 					</a>
 				</div>
-				<% if (!quiz.isPosted) { %>
-				<a class="btn btn-dark" href="/quiz/addQuestions/<%= quiz.id%>">
-					Edit
-				</a>
+				<% if (currentUser === user) { %>
+					<% if (!quiz.isPosted) { %>
+					<a class="btn btn-dark" href="/quiz/addQuestions/<%= quiz.id%>">
+						Edit
+					</a>
+					<% } %>
 				<% } %>
 				<% if (quiz.isPosted) { %>
 				<a class="float-right btn btn-dark" href="#">
