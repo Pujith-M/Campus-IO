@@ -14,10 +14,6 @@ function checkUserHasTakenQuiz(quiz) {
 %>
 
 <div class="container text-center">
-	<a class="btn btn-info" href="/quiz/add">
-		Create Quiz
-	</a>
-	<p></p>
 
 	<!-- Display details for student profile -->
 	<% if (!isSupport) { %>
@@ -47,6 +43,12 @@ function checkUserHasTakenQuiz(quiz) {
 				</ul>
 			</div>
 		</div>
+	<% } else { %>
+		<br>
+		<br>
+		<a class="btn btn-info" href="/quiz/add">
+			Create Quiz
+		</a>
 	<% } %>
 	
 </div>
