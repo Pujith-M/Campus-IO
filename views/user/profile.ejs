@@ -20,7 +20,7 @@
 
 		<!-- Details to be displayed for student profile -->
 
-		<% if (!user.isSupport) { %>
+		<% if ((!user.isSupport) && (currentUser.id === user.id)) { %>
 
 		
 		<strong>Object Oriented Programming</strong>
@@ -132,7 +132,7 @@
 					<% } %>
 				<% } %>
 				<% if (quiz.isPosted) { %>
-				<a class="float-right btn btn-dark" href="#">
+				<a class="float-right btn btn-dark" href="/quiz/viewResult/<%= quiz.id %>">
 					View Results
 				</a>
 				<% } else { %>
