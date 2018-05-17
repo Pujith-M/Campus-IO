@@ -155,6 +155,9 @@ router.get('/:id', middleware.isLoggedIn, function(req, res) {
 				collegeAverage.os /= allUsers.length;
 				collegeAverage.apt /= allUsers.length;
 
+				console.log(collegeAverage);
+				console.log(collegeTopper);
+
 				res.render('user/profile', {user: foundUser, collegeAverage: collegeAverage, collegeTopper: collegeTopper});
 			})
 		}
