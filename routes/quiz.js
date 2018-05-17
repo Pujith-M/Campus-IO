@@ -46,7 +46,7 @@ router.post('/add', middleware.isLoggedIn, function(req, res) {
 					);
 			}
 		});
-	}else{
+	} else {
 		req.flash('error', 'You don\'t have permission to this page');
 		res.redirect('/user/home');
 	}

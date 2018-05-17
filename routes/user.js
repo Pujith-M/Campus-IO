@@ -161,6 +161,7 @@ router.get('/:id', middleware.isLoggedIn, function(req, res) {
 	});
 });
 
+
 // render the edit profile page
 router.get('/:id/edit', middleware.isLoggedIn, function(req, res) {
 	User.findById(req.params.id, function(err, foundUser) {
