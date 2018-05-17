@@ -2,8 +2,19 @@
 <% include ../partials/navbar %>
 <% include ../partials/alert %>
 
+<% currentQuiz.takenByUsers.sort(function(b, a) {
+   return a.score - b.score;
+}); %>
+
 <div class="container">
 	<div class="backdrop myShadow">
+		<p></p>
+		<div class="text-center">
+			<h2>
+				<%= currentQuiz.title %> - <%= currentQuiz.author.name %>
+			</h2>
+		</div>
+		<p></p>
 		<table class="table">
 			<thead>
 				<tr>

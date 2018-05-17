@@ -14,44 +14,59 @@ function checkUserHasTakenQuiz(quiz) {
 %>
 
 <div class="container text-center">
-
-	<!-- Display details for student profile -->
-	<% if (!isSupport) { %>
-
-		<div class="container">
-			<div class="col-md-10 offset-md-1 backdrop myShadow">
-				<ul class="list-group">
-					<% allQuizzes.forEach(function(quiz) { %>
-						<li class="list-group-item">
-							<!-- <img class="rounded-circle float-left myShadow" src="<%= quiz.author.avatar %>" height="57px" width="57px"> -->
-							<div class="float-center">
-								<h3>
-									<%= quiz.title %> by <%= quiz.author.name %>
-								</h3>
-							</div>
-							<% if(!checkUserHasTakenQuiz(quiz)){ %>
-								<a class="btn btn-success" href="/quiz/viewResult/<%= quiz._id%>">
-									View Results
-								</a>
-							<% } else { %>
-								<a class="btn btn-warning" href="/quiz/take/<%= quiz._id%>">
-									Take Quiz
-								</a>
-							<% } %>
-						</li>
-					<% }); %>
-				</ul>
-			</div>
-		</div>
-	<% } else { %>
-		<br>
-		<br>
-		<a class="btn btn-info" href="/quiz/add">
-			Create Quiz
-		</a>
-	<% } %>
-	
+	<div class="col-md-10 offset-md-1 backdrop myShadow">
+		<% if (isSupport) { %>
+			<a class="btn btn-success float-center" href="">Create New Quiz</a>
+			<p></p>
+			<hr>
+			<% if (allQuizzes.length != 0) { %>
+				Here are the quizzes posted by you
+			<% } else { %>
+				No quizzes posted yet by you
+			<% } %>
+		<% } %>
+		<% if (!isSupport) { %>
+			<% if (allQuizzes.length != 0) { %>
+				Here are some quizzes for you
+			<% } else { %>
+				No quizzes posted yet
+			<% } %>
+		<% } %>
+		<ul class="list-group">
+			<% allQuizzes.forEach(function(quiz) { %>
+				<li class="list-group-item">
+					<% if (!isSupport) { %>
+						<div class="float-left">
+							<%= quiz.title %> - <br><%= quiz.author.name %>
+						</div>
+						<% if(!checkUserHasTakenQuiz(quiz)) { %>
+							<a class="btn btn-success float-right" href="/quiz/viewResult/<%= quiz._id%>">
+								View Results
+							</a>
+						<% } else { %>
+							<a class="btn btn-warning float-right" href="/quiz/take/<%= quiz._id%>">
+								Take Quiz
+							</a>
+						<% } %>
+					<% } else { %>
+						<div class="float-left">
+							<a href="/quiz/preview/<%= quiz._id %>">
+								<%= quiz.title %>
+							</a>
+						</div>
+						<div class="float-right">
+							<a class="btn btn-success float-right" href="/quiz/viewResult/<%= quiz._id%>">
+								View Results
+							</a>
+						</div>
+					<% } %>
+				</li>
+			<% }); %>
+		</ul>
+	</div>
 </div>
+
+
 
 
 <% include ../partials/footer %>
